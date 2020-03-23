@@ -24,9 +24,6 @@ namespace TestPlugin {
         private Persistent<TestConfig> _config;
         public TestConfig Config => _config?.Data;
 
-        private PatchManager patchManager;
-        private PatchContext ctx;
-
         public override void Init(ITorchBase torch) {
             base.Init(torch);
 
@@ -38,28 +35,10 @@ namespace TestPlugin {
             else
                 Log.Warn("No session manager loaded!");
 
-            patchManager = Torch.Managers.GetManager<PatchManager>();
-            if (patchManager != null) {
-
-                if (ctx == null)
-                    ctx = patchManager.AcquireContext();
-
-            } else {
-                Log.Warn("No patch manager loaded!");
-            }
-
             Save();
         }
 
         private void SessionChanged(ITorchSession session, TorchSessionState newState) {
-
-            if (newState == TorchSessionState.Loaded) {
-
-                MyLargeTurretBasePatch.Patch(ctx);
-                MySessionPatch.Patch(ctx);
-
-                patchManager.Commit();
-            }
 
             Log.Info("Session-State is now " + newState);
         }

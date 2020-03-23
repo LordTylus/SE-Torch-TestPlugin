@@ -10,7 +10,8 @@ using VRage.Game;
 
 namespace TestPlugin {
 
-    class MySessionPatch {
+    [PatchShim]
+    public static class MySessionPatch {
 
         public static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
@@ -23,8 +24,6 @@ namespace TestPlugin {
             throw new Exception("Failed to find patch method");
 
         public static void Patch(PatchContext ctx) {
-
-            ReflectedManager.Process(typeof(MySessionPatch));
 
             try {
 

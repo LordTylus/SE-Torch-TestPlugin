@@ -7,7 +7,8 @@ using Torch.Utils;
 
 namespace TestPlugin {
 
-    class MyLargeTurretBasePatch {
+    [PatchShim]
+    public static class MyLargeTurretBasePatch {
 
         public static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
@@ -20,8 +21,6 @@ namespace TestPlugin {
             throw new Exception("Failed to find patch method");
 
         public static void Patch(PatchContext ctx) {
-
-            ReflectedManager.Process(typeof(MyLargeTurretBasePatch));
 
             try {
 
